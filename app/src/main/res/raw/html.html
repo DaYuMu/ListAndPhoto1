@@ -1,0 +1,1284 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>          
+            <link rel="canonical" href="http://blog.csdn.net/samuel__liu/article/details/50743106"/> 
+
+   
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+       
+    <title>Android中保存图片到本地功能实现 - Samuel__Liu的专栏
+        - CSDN博客</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="文章转载自http://blog.csdn.net/ccpat/article/details/45314175&#160; 感谢原作者本文描述将一个Bitmap对象保存为一个图片文件的主要步骤。保存的图片文件能够立刻在系统相册和图库中找到。主要步骤这里只介绍按下“保存”后如何将一个Bitmap对象保存为图片文件的执行步骤，对图片的下载，图片到Bitmap对象的转换，" />
+
+    <meta name="keywords" content="Android" />
+
+   
+    <script src="http://static.blog.csdn.net/scripts/blog_static_head.min.js" type="text/javascript"></script>
+
+    
+        <!--new top-->
+       
+       
+        <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/dark1/css/style.css?v=1.1" />
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/Samuel__Liu/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+
+    <link href="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet" />
+     
+         <link rel="stylesheet" href="http://static.blog.csdn.net/css/csdn_blog_detail.min.css" />
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+</head>
+
+
+<body>  
+     
+        <div class="tracking-ad" data-view="true" data-mod="ad_popu_72"  data-mtp="62" data-order="40" data-con="ad_content_2072" >
+                     <script id="popuLayer_js_q" src="http://ads.csdn.net/js/popuLayer.js" defer="defer"  type="text/javascript"></script>
+                <div id="layerd" style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000">
+    	                <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 -->
+                    <div id="cpro_u2895327">
+                        <!-- 投放代码 -->
+                        <script src="http://dup.baidustatic.com/js/ds.js"></script>
+                       <!-- 广告位：PC端-博客详情页右侧弹窗-300*250 -->
+                            <script>
+                                (function () {
+                                    var s = "_" + Math.random().toString(36).slice(2);
+                                    document.write('<div id="' + s + '"></div>');
+                                    (window.slotbydup = window.slotbydup || []).push({
+                                        id: '4740870',
+                                        container: s,
+                                        size: '300,250',
+                                        display: 'inlay-fix'
+                                    });
+                                })();
+                            </script>
+                    </div></div>
+                <script>  document.getElementById("popuLayer_js_q").onload = function () {
+      var styObjd = styObj = { width: "300px", "height": parseInt(250) + 28 };
+      window.CSDN.Layer.PopuLayer("#layerd", { storageName: "layerd", styleObj: styObjd, total: 50, expoire: 1000 * 60 });
+  }</script>
+            
+     
+        </div>
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/samuel__liu">Samuel__Liu的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/samuel__liu?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/samuel__liu?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/samuel__liu/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "Samuel__Liu";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/samuel__liu";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+
+<a href="http://blog.csdn.net/epubit17/article/details/78038722">
+<font color=red><strong>异步赠书：9月重磅新书升级，本本经典</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/581?utm_source=blog4">
+<font color=blue><strong>【免费直播】Python最佳学习路线！</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a href="http://blog.csdn.net/turingbooks/article/details/78017356">
+<font color=blue><strong>程序员9月书讯</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="http://blog.csdn.net/broadview2006/article/details/78189453">
+<font color=red><strong>节后荐书：Python、PyQt5、Kotlin（评论送书）</strong></font></a>
+
+
+
+</div>                        </div>
+
+                        
+
+
+
+  
+
+
+
+
+
+
+<script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+      var isBole = false; 
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=Android%e4%b8%ad%e4%bf%9d%e5%ad%98%e5%9b%be%e7%89%87%e5%88%b0%e6%9c%ac%e5%9c%b0%e5%8a%9f%e8%83%bd%e5%ae%9e%e7%8e%b0&u=http://blog.csdn.net/samuel__liu/article/details/50743106"
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+    <h1>
+        <span class="link_title"><a href="/samuel__liu/article/details/50743106">
+        Android中保存图片到本地功能实现        
+           
+        </a>
+        </span>
+
+         
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/Android' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">Android</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2016-02-25 23:56</span>
+            <span class="link_view" title="阅读次数">17800人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(9)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('Android%e4%b8%ad%e4%bf%9d%e5%ad%98%e5%9b%be%e7%89%87%e5%88%b0%e6%9c%ac%e5%9c%b0%e5%8a%9f%e8%83%bd%e5%ae%9e%e7%8e%b0','50743106');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(50743106,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('6098507','Samuel__Liu','top','50743106');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">Android<em>（15）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/Samuel__Liu/article/category/6098507"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_6098507">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+
+  
+
+  
+  
+     
+
+
+<div id="article_content" class="article_content tracking-ad" data-mod=popu_307  data-dsm = "post" >
+
+<p><span style="font-size:14px">初学Android时转载的文章，没想到还有很多人看，但是今天我才发现我这排版排的什么玩意啊，根本没法看！估计也耽误了很多人的时间！真的很对不住，写博客也是个细心的活，不能掺进偷懒的想法。</span></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><span style="font-size:14px">文章转载自http://blog.csdn.net/ccpat/article/details/45314175&nbsp; 感谢原作者~</span></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><span style="font-size:14px">本文描述将一个Bitmap对象保存为一个图片文件的主要步骤。保存的图片文件能够立刻在系统相册和图库中找到。</span></p>
+<h2 id="主要步骤"></h2>
+<h2 id="主要步骤"><span style="font-size:18px"><br>
+</span></h2>
+<h2 id="主要步骤"><span style="font-size:18px">主要步骤</span></h2>
+<p><span style="font-size:14px">这里只介绍按下“保存”后如何将一个Bitmap对象保存为图片文件的执行步骤，对图片的下载，图片到Bitmap对象的转换，Bitmap对象的&#26684;式转换和压缩，以及界面设计部分全部都忽略了。</span></p>
+<ol>
+<li><span style="font-size:14px">确定存储路径</span></li><li><span style="font-size:14px">获取外部存储权限</span></li><li><span style="font-size:14px">确定外部存储状态</span></li><li><span style="font-size:14px">确定文件名</span></li><li><span style="font-size:14px">保存到文件中</span></li><li><span style="font-size:14px">发送广播，通知系统扫描保存后的文件</span></li></ol>
+<div><span style="font-size:14px"><br>
+</span></div>
+<div><strong><span style="font-size:18px">确</span><span style="font-size:18px">定存储路径</span></strong></div>
+<p><span style="font-size:14px"><span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; 在Android中文件存储路径包括内部存储和外部存储两种类型。&nbsp;</span></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><span style="font-size:14px; white-space:pre"></span><span style="font-size:14px">&nbsp; &nbsp; &nbsp; 对内部存储，当一个app被安装到手机后，Android系统会在内部存储的/data/data/目录下创建一个以包名称命名的文件夹。例如</span><strong><span style="font-size:12px">/data/data/com.sohu.inputmethod.sogou/</span></strong><span style="font-size:14px">。一个应用对内部存储的所有访问都被限制在这个文件夹中，也就是说Android应用只能在该目录中读取，创建，修改文件。对该目录之外的其他内部存储中的目录都没有任何操作的权限。因此，如果将图片保存在内部存储中，只能被应用自身读取，其他应用均无法读取。如果需要让系统图库，相册或其他应用能够找到保存的图片，必须将图片保存到外部存储中。</span></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><span style="font-size:14px; white-space:pre"></span><span style="font-size:14px">&nbsp; &nbsp; &nbsp; 对外部存储，当一个app被安装到手机后，Android系统会在外部存储的</span><strong><span style="font-size:12px">/Android/data/</span></strong><span style="font-size:14px">目录下创建一个以包名命名的文件夹（这里第一个/不是根路径，而是相对外部存储所挂载路径的相对路径）。例如</span><strong><span style="font-size:12px">/storage/emulated/0/Android/data/com.sohu.inputmethod/</span></strong><span style="font-size:14px">。这个路径同样只能被应用自身读取，其他应用不能访问。因此，也不能将图片保存在这个目录中。</span></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><span style="font-size:14px; white-space:pre"></span><span style="font-size:14px">&nbsp; &nbsp; &nbsp; &nbsp;除外部存储的</span><span style="font-size:12px"><strong>/Android</strong></span><span style="font-size:14px">目录之外的其他目录一般都是可以被其他应用访问的。目前，大多数应用都会在外部存储的根路径下建立一个类&#20284;包名的多层目录，以存储需要共享的文件。例如</span><span style="font-size:12px"><strong>/storage/emulated/0/sogou/image/</strong></span><span style="font-size:14px">。还需要注意的是，很多查看图片的应用都支持按照文件夹来查看图片。如果将图片所在的文件夹取名为image，photo之类的，就无法和其他文件夹区分开，用户也不能识别该文件夹的用途。因此最好取一个有区分度的文件夹名字，例如百度贴吧就保存在<strong>/tieba</strong>目录，微信是保存在<strong>/</strong></span><span style="font-size:12px"><strong>tencent/MicroMsg/WeiXin</strong></span><span style="font-size:14px">目录。</span></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><span style="font-size:14px"><span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;由于Android系统的碎片化问题，不同设备上外部存储的路径很可能会不同，因此，不能直接使用/storage/emulated/0/作为外部存储的根路径。<br>
+<span style="white-space:pre"></span>Android SDK中 Environment类 提供了getExternalStorageDirectory()方法来获取外部存储的根路径。示例如下:</span></p>
+<p><span style="font-size:14px"></span></p>
+<pre name="code" class="java">    String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + &quot;/tencent/MicroMsg/WeiXin/&quot;
+
+</pre>
+<p></p>
+<p><span style="font-size:14px">需要注意的是Environment.getExternalStorageDirectory()返回的路径中最后一个字符不是/，如果需要创建子目录，需要在子目录的前后都加上/。</span></p>
+<p><span style="font-size:14px"><strong><br>
+</strong></span></p>
+<p><strong><span style="font-size:18px">获取外部存储权限</span></strong></p>
+<p><span style="font-size:14px"><span style="white-space:pre"></span>由于需要在外部存储中写文件，需要在AndroidManifest.xml中增加如下的权限声明。</span></p>
+<p><span style="font-size:14px"></span></p>
+<pre name="code" class="java">     &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;</pre>
+<p></p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><strong><span style="font-size:18px">确定外部存储状态</span></strong></p>
+<p><span style="font-size:14px">&nbsp; &nbsp; &nbsp; &nbsp;由于外部存储需要被挂载，也可以被卸载，在写入文件之前，需要先判断外部存储的状态是否正常。只有状态正常情况下才可以执行保存文件的操作。获取外部存储状态同样是通过Environment类，通过Environment.getExternalStorageState()可以得到一个字符串，来表示外部存储的状态。同时在Environment类中定义了一系列的String常量表示不同的状态。在所有的状态中只有内部存储处于Environment.MEDIA_MOUNTED状态时才可以读写文件，因此，需要将获取到的状态和Environment.MEDIA_MOUNTED做比较，如果不是Environment.MEDIA_MOUNTED状态，就返回保存失败。示例如下。</span></p>
+<p><span style="font-size:14px"></span><pre name="code" class="java">    //获取内部存储状态
+    String state = Environment.getExternalStorageState();
+    //如果状态不是mounted，无法读写
+    if (!state.equals(Environment.MEDIA_MOUNTED)) {
+       return;
+    }</pre><br>
+<br>
+</p>
+<p><span style="font-size:14px"><br>
+</span></p>
+<p><strong><span style="font-size:18px">确定文件名</span></strong></p>
+<p><span style="font-size:14px">&nbsp; &nbsp; &nbsp; &nbsp;保存的图片文件名可以由应用根据自身需要自行确定，一般来说需要有一个命名规则，然后根据命名规则计算得到文件名。<br>
+&nbsp; &nbsp; &nbsp; &nbsp;这里列举几种常见的命名规则。</span></p>
+<ol>
+<li>
+<p><span style="font-size:14px">随机命名 &nbsp;<br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;这种命名规则是随机生成一个字符串或一组数字来对图片命名。 <br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;字符串可以通过UUID来生成，数字可以通过Random()类来生成，例如：</span><pre name="code" class="java">//通过UUID生成字符串文件名
+String fileName1 = UUID.randomUUID().toString();
+//通过Random()类生成数组命名
+Random random = new Random();
+String fileName2 = String.valueOf(random.nextInt(Integer.MAX_VALUE));</pre><br>
+</p>
+</li><li>
+<p><span style="font-size:14px">这种命名规则是按照数字从小到大的顺序来对图片命名。 <br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;在程序启动时先获取图片文件名中当前最大数字的文件名，之后每保存一张图片就将数字加1即可。</span></p>
+</li><li>
+<p><span style="font-size:14px">时间命名 <br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;这种命名规则是根据保存图片的当前系统时间来对图片命名。 <br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;系统时间可以通过System.currentTimeMillis()来获取，不过System.currentTimeMillis()获取到的时间是一个long型的整数，如果用它做文件名，无法通过文件名直接看出文件的具体保存时间。可以通过SimpleDateFormat先对当前时间做&#26684;式化，然后再将其作为文件名来使用。例如：</span><pre name="code" class="java">Calendar now = new GregorianCalendar();
+SimpleDateFormat simpleDate = new SimpleDateFormat(&quot;yyyyMMddHHmmss&quot;, Locale.getDefault());
+String fileName = simpleDate.format(now.getTime());</pre></p>
+<p><span style="font-size:14px"><span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;使用这种命名规则来命名需要注意的是同一秒钟可能会有多张图片需要保存，在得到当前系统时间对应的文件名后，需要判断该文件是否存在。如果文件已经存在，需要重新生成文件名。重新生成的文件名可以在之前的文件名后加上一个随机数后缀，或者是用毫秒数做后缀。</span></p>
+</li><li>
+<p><span style="font-size:14px">文件URL命名 <br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;每张网络图片都有一个对应的图片URL，可以根据图片的URL来对图片命名。 <br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;不过URL中会包含一些不能用作文件名的特殊字符，此外直接用URL来命名可能会带来安全问题。为了避免这两个问题，可以将图片URL的MD5&#20540;作为文件名来使用。由于MD5是不可逆的，也就无法通过MD5&#20540;反向得到图片URL，同时MD5&#20540;对应的字符串只包含[0-9A-Z]，不包含特殊字符，可是作为文件名使用。<br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;由于每张图片的URL是唯一的，其对应的文件名也就是唯一的。如果需要每张网络图片只能生成一个文件，不允许保存为多份拷贝，可以用这种命名规则。在得到URL对应的文件名后，先判断文件是否已经存在，如果已经存在，直接覆盖或不处理。</span></p>
+</li></ol>
+<div><span style="font-size:14px"><br>
+</span></div>
+<div><strong><span style="font-size:18px">保存到文件中</span></strong></div>
+<p><span style="font-size:14px"><span style="white-space:pre"></span>保存图片文件时，通过Bitmap的compress()方法将Bitmap对象压缩到一个文件输出流中，然后flush()即可。示例如下。</span></p>
+<p><span style="font-size:14px"></span><pre name="code" class="java">try {
+        File file = new File(dir + fileName + &quot;.jpg&quot;);
+        FileOutputStream out = new FileOutputStream(file);
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        out.flush();
+        out.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }</pre><br>
+<br>
+</p>
+<p></p>
+<h2 id="发送广播通知系统扫描保存后的文件"></h2>
+<h2 id="发送广播通知系统扫描保存后的文件"><span style="font-size:18px">发送广播，通知系统扫描保存后的文件</span></h2>
+<h2 id="发送广播通知系统扫描保存后的文件" style="font-size:14px"><span style="font-size:14px; font-weight:normal"><span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;至此，已经实现将Bitmap对象保存成外部存储中的一个jpg&#26684;式的文件。但此时该文件只是保存在外部存储的一个目录中，必须进入其所在的目录中才可以看到。在系统图库，相册和其他应用中无法看到新建的图片文件。为了让其他应用能够知道图片文件被创建，必须通知MediaProvider服务将新建的文件添加到图片数据库中。</span></h2>
+<h2 id="发送广播通知系统扫描保存后的文件" style="font-size:14px"><span style="font-size:14px"><span style="white-space:pre"></span><span style="font-weight:normal">&nbsp; &nbsp; &nbsp; &nbsp;Android系统中常驻一个MediaProvider服务，对应的进程名为android.process.media，此服务用来管理本机上的媒体文件，提供媒体管理服务。在系统开机或者收到外部存储的挂载消息后，MediaProvider会调用MediaScanner，MediaScanner会扫描外部存储中的所有文件，根据文件类型的后缀将文件信息保存到对应的数据库中，供其他APP使用。</span></span></h2>
+<p></p>
+<p><span style="font-size:14px"><span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;MediaScannerReceiver是一个广播接收者，当它接收到特定的广播请求后，就会去扫描指定的文件，并根据文件信息将其添加到数据库中。当图片文件被创建后，就可以发送广播给MediaScannerReceiver，通知其扫描新建的图片文件。示例如下。</span></p>
+<p><span style="font-size:14px"></span><pre name="code" class="java">try {
+        File file = new File(dir + fileName + &quot;.jpg&quot;);
+        FileOutputStream out = new FileOutputStream(file);
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        out.flush();
+        out.close();
+        //保存图片后发送广播通知更新数据库
+        Uri uri = Uri.fromFile(file);
+        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+    } catch (Exception e) {
+        e.printStackTrace();
+    }</pre><br>
+<br>
+</p>
+<h2 id="图片的异步保存"><span style="font-size:18px">图片的异步保存</span></h2>
+<p><span style="font-size:14px"><span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;保存图片文件时，如果图片很大，或需要同时保存多张图片时，就需要较多的时间。为了避免阻塞UI线程，出现帧率下降或ANR，通常需要将图片保存操作放到线程中去执行。当图片保存完毕后通过sendMessage()方法通知UI线程保存结果。<br>
+<span style="white-space:pre"></span>&nbsp; &nbsp; &nbsp; &nbsp;将图片保存放到后台线程去执行需要增加一些同步机制避免一些多线程问题。例如有两张图片需要保存，分别放到两个线程中去执行，保存图片时文件名以数字顺序增加。第一个线程选中文件名为125.jpg，但此时文件还未创建，第二个线程判断125.jpg不存在，于是也选取125.jpg作为文件名，两张图片就保存到同一个文件中了。</span></p>
+<p></p>
+<span style="font-size:18px"><br>
+</span>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+<!--172.16.140.14-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" ArticleId="50743106" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>9</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+        function btndigga() {
+            $(".tracking-ad[data-mod='popu_222'] a").click();
+        }
+        function btnburya() {
+            $(".tracking-ad[data-mod='popu_223'] a").click();
+        }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='http://blog.csdn.net/Samuel__Liu/article/details/50730140';">上一篇</span><a href="http://blog.csdn.net/Samuel__Liu/article/details/50730140" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">Android中AsyncTask的用法</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='http://blog.csdn.net/Samuel__Liu/article/details/51049579';">下一篇</span><a href="http://blog.csdn.net/Samuel__Liu/article/details/51049579" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">Android Activity生命周期介绍 &amp;&amp; 对应方法中适合执行的操作</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article"   >
+                    <h4></h4>
+                    <div class="similar_c"style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36"  style="max-height:250px">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/a407479/article/details/51644602" title="关于图片或者文件在数据库的存储方式归纳" strategy="BlogCommendFromBaidu_0" target="_blank">关于图片或者文件在数据库的存储方式归纳</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/64?utm_source=blog7" title="Presto服务治理与架构优化在京东的实践应用--王哲涵" strategy="undefined" target="_blank">Presto服务治理与架构优化在京东的实践应用--王哲涵</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u013699800/article/details/51208468" title="url图片 保存文件到本地" strategy="BlogCommendFromBaidu_1" target="_blank">url图片 保存文件到本地</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/detail/581?utm_source=blog7" title="【免费直播】Python最佳学习路线--韦玮" strategy="undefined" target="_blank">【免费直播】Python最佳学习路线--韦玮</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/qq_31028313/article/details/55251370" title="将bitmap对象保存到本地，返回保存的图片路径" strategy="BlogCommendFromBaidu_2" target="_blank">将bitmap对象保存到本地，返回保存的图片路径</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/3936?utm_source=blog7" title="JS-SDK开发与微信支付" strategy="undefined" target="_blank">JS-SDK开发与微信支付</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zhang___yong/article/details/56282394" title="view转bitmap&amp;&amp;保存图片到本地" strategy="BlogCommendFromBaidu_3" target="_blank">view转bitmap&amp;&amp;保存图片到本地</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/5840?utm_source=blog7" title="Spring Cloud微服务真实场景实战解析" strategy="undefined" target="_blank">Spring Cloud微服务真实场景实战解析</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/fxtxz2/article/details/8115038" title="将Bitmap保存为文件File的方法" strategy="BlogCommendFromBaidu_4" target="_blank">将Bitmap保存为文件File的方法</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/6080?utm_source=blog7" title="10小时深入掌握 Kubernetes" strategy="undefined" target="_blank">10小时深入掌握 Kubernetes</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/z1246300949/article/details/50681435" title="Android保存Bitmap到本地图库" strategy="BlogCommendFromBaidu_5" target="_blank">Android保存Bitmap到本地图库</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/6134?utm_source=blog7" title="JDK9新特性" strategy="undefined" target="_blank">JDK9新特性</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/wenbitianxiafeng/article/details/49274743" title="【系统相册】Android 保存图片到系统相册" strategy="BlogCommendFromBaidu_6" target="_blank">【系统相册】Android 保存图片到系统相册</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/ccpat/article/details/45314175" title="Android应用中保存网络图片功能实现详解" strategy="BlogCommendFromBaidu_7" target="_blank">Android应用中保存网络图片功能实现详解</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zhou_anzhuojinjie/article/details/56479670" title="安卓开发截取当前屏幕图片及截取整个ListView图片并保存到本地" strategy="BlogCommendFromBaidu_8" target="_blank">安卓开发截取当前屏幕图片及截取整个ListView图片并保存到本地</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/bitian123/article/details/51504888" title="android 将bitmap缓存到本地" strategy="BlogCommendFromBaidu_9" target="_blank">android 将bitmap缓存到本地</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+     <div>
+           
+
+       
+                           
+            <!-- 广告位：PC端-博客内容页-banner1-960*90 --> 
+           
+         <script type="text/javascript" src="http://mpb1.iteye.com/kfunnhoouimhnlou.js"></script>
+    </div>
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/Samuel__Liu/svc/GetSuggestContent/50743106",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+
+            
+                                    
+            
+                                    
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '50743106';
+    var commentscount = 9;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='Android中保存图片到本地功能实现';
+
+</script>
+
+
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/Samuel__Liu" target="_blank">
+    <img src="http://avatar.csdn.net/1/F/B/1_samuel__liu.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/Samuel__Liu" class="user_name" target="_blank">Samuel__Liu</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=Samuel__Liu','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>34536次</span></li>
+    <li>积分：<span>394</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog2.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：394 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>6篇</span></li>
+    <li>转载：<span>19篇</span></li>
+    <li>译文：<span>1篇</span></li>
+    <li>评论：<span>11条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body" class="form_search">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank"  data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6098507" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android</a><span>(16)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6098525" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">杂货铺</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6099822" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">异常</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6099823" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">笔试题</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6099824" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">面试题</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6431013" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">生活杂想</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6478491" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Java</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/6480393" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android性能优化</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/Samuel__Liu/article/category/7011959" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">jvm</a><span>(0)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/Samuel__Liu/article/month/2017/07">2017年07月</a><span>(1)</span></li><li><a href="/Samuel__Liu/article/month/2017/03">2017年03月</a><span>(1)</span></li><li><a href="/Samuel__Liu/article/month/2017/02">2017年02月</a><span>(1)</span></li><li><a href="/Samuel__Liu/article/month/2016/12">2016年12月</a><span>(2)</span></li><li><a href="/Samuel__Liu/article/month/2016/10">2016年10月</a><span>(6)</span></li><li><a href="/Samuel__Liu/article/month/2016/09">2016年09月</a><span>(2)</span></li><li><a href="/Samuel__Liu/article/month/2016/07">2016年07月</a><span>(3)</span></li><li><a href="/Samuel__Liu/article/month/2016/04">2016年04月</a><span>(2)</span></li><li><a href="/Samuel__Liu/article/month/2016/02">2016年02月</a><span>(7)</span></li><li><a href="/Samuel__Liu/article/month/2015/03">2015年03月</a><span>(1)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel tracking-ad" data-mod="popu_340">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/samuel__liu/article/details/50743106" title="Android中保存图片到本地功能实现">Android中保存图片到本地功能实现</a><span>(17750)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/53761683" title="Android 异常 “Binary XML file line # : Error inflating class”">Android 异常 “Binary XML file line # : Error inflating class”</a><span>(2767)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50695591" title="The content of the adapter has changed but ListView did not receive a notification分析">The content of the adapter has changed but ListView did not receive a notification分析</a><span>(2425)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50678181" title="Android中scrollTo()和scrollBy()的区别以及Scroller源码解析">Android中scrollTo()和scrollBy()的区别以及Scroller源码解析</a><span>(1326)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/51049579" title="Android Activity生命周期介绍 &amp;&amp; 对应方法中适合执行的操作">Android Activity生命周期介绍 &amp;&amp; 对应方法中适合执行的操作</a><span>(1225)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/51981393" title="Android XML与Json的区别">Android XML与Json的区别</a><span>(991)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/52497080" title="使用百度地图时遇到的一些坑">使用百度地图时遇到的一些坑</a><span>(920)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/52905745" title="如何写出正确的单例模式">如何写出正确的单例模式</a><span>(591)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/56276888" title="Android App的设计架构：MVC,MVP,MVVM与架构经验谈">Android App的设计架构：MVC,MVP,MVVM与架构经验谈</a><span>(502)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50715545" title="Android中onMeasure方法的理解">Android中onMeasure方法的理解</a><span>(478)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel tracking-ad" data-mod="popu_341">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/samuel__liu/article/details/50743106" title="Android中保存图片到本地功能实现">Android中保存图片到本地功能实现</a><span>(9)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/51981393" title="Android XML与Json的区别">Android XML与Json的区别</a><span>(1)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/51049579" title="Android Activity生命周期介绍 &amp;&amp; 对应方法中适合执行的操作">Android Activity生命周期介绍 &amp;&amp; 对应方法中适合执行的操作</a><span>(1)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/51181501" title="Android 图片的三级缓存">Android 图片的三级缓存</a><span>(0)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50730140" title="Android中AsyncTask的用法">Android中AsyncTask的用法</a><span>(0)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50715545" title="Android中onMeasure方法的理解">Android中onMeasure方法的理解</a><span>(0)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50714870" title="Android中View的绘制流程详解">Android中View的绘制流程详解</a><span>(0)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50710186" title="Handler详解">Handler详解</a><span>(0)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/50695591" title="The content of the adapter has changed but ListView did not receive a notification分析">The content of the adapter has changed but ListView did not receive a notification分析</a><span>(0)</span>
+</li>
+<li>
+<a href="/samuel__liu/article/details/74614104" title="深入理解Java类加载器(ClassLoader)">深入理解Java类加载器(ClassLoader)</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/PK.html" target="_blank">* 【观点】第二十三期：程序员应该如何积累财富？</a></li>
+<li><a href="http://blog.csdn.net/lowprofile_coding/article/details/77852131" 
+target="_blank">* Android检查更新下载安装</a></li>
+<li><a href="http://blog.csdn.net/yhaolpz/article/details/77366154"target="_blank">* 动手打造史上最简单的 Recycleview 侧滑菜单</a></li>
+<li><a href="http://blog.csdn.net/sweettool/article/details/77018506" 
+target="_blank">* TCP网络通讯如何解决分包粘包问题</a></li>
+<li><a href="http://edu.csdn.net/huiyiCourse/series_detail/64" 
+target="_blank">* SDCC 2017之大数据技术实战线上峰会</a></li>
+<li><a href="http://blog.csdn.net/pangpang123654/article/details/78012706" 
+target="_blank">* 快速集成一个视频直播功能
+</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/samuel__liu/article/details/50743106#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/Emily2015" class="user_name">Emily2015</a>:
+有帮助，谢谢。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/50743106#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/Emily2015" class="user_name">Emily2015</a>:
+@lancer1004045797:遇到相同问题，刚开始以为是权限问题，需要手动代码判断请求，但是没...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/50743106#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/Samuel__Liu" class="user_name">Samuel__Liu</a>:
+@lancer1004045797:不好意思今天才看到～  不知道你是否解决了，如果没解决的话我想知...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/50743106#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/lancer1004045797" class="user_name">lancer1004045797</a>:
+String dir = Environment.getExternalStorageDirecto...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/51981393#comments">Android XML与Json的区别</a>
+    <p style="margin:0px;"><a href="/chenlin11011988" class="user_name">chenlin11011988</a>:
+学习了
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/51981393#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/qq_23089525" class="user_name">qq_23089525</a>:
+@qq_34998941:呵呵，这里不存在pay的关系，完全是出于好意的建议，博主整理过后，我敢说，...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/51981393#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/qq_34998941" class="user_name">qq_34998941</a>:
+@qq_23089525:你就是典型的当了嫖客还嫌别人脏
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/51981393#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/qq_23089525" class="user_name">qq_23089525</a>:
+@Samuel__Liu:就是感觉写的不错，就是格式乱了点。。。嘿嘿。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/51981393#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/Samuel__Liu" class="user_name">Samuel__Liu</a>:
+@qq_23089525:兄弟，多谢啦!! 之前我真是太懒了！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/samuel__liu/article/details/51981393#comments">Android中保存图片到本地功能实现</a>
+    <p style="margin:0px;"><a href="/qq_23089525" class="user_name">qq_23089525</a>:
+说实话哥们。。。这篇博客。。可读性太差了。。。看了个开头就看不下去了。。。整理下格式吧，代码都用代码...
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+                   <div class="tracking-ad" data-view="true"  data-mtp="63" data-order="40" data-con="ad_content_1260" style="width: 200px; height: 400px;">
+                         <div id="nav_show_top_stop" style="width: 200px;height: 500px;z-index:1000">
+                             <div id="cpro_u2734128">
+                                  <!-- 投放代码 -->                           
+                              <!-- 请置于所有广告位代码之前 -->
+                                <script src="http://dup.baidustatic.com/js/ds.js"></script>
+                                 <!-- 广告位：PC端-博客详情页-左侧button1-200*200 -->
+                                    <script>
+                                        (function () {
+                                            var s = "_" + Math.random().toString(36).slice(2);
+                                            document.write('<div id="' + s + '"></div>');
+                                            (window.slotbydup = window.slotbydup || []).push({
+                                                id: '4740881',
+                                                container: s,
+                                                size: '200,200',
+                                                display: 'inlay-fix'
+                                            });
+                                        })();
+                                    </script>
+                             </div>
+                             <div id="cpro_u3031287">
+                                  <!-- 投放代码 -->
+                                <!-- 请置于所有广告位代码之前 -->
+                                    <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+                                 <!-- 广告位：PC端-博客详情页-左侧button2-200*200 -->
+                                <script>
+                                    (function () {
+                                        var s = "_" + Math.random().toString(36).slice(2);
+                                        document.write('<div id="' + s + '"></div>');
+                                        (window.slotbydup = window.slotbydup || []).push({
+                                            id: '4740894',
+                                            container: s,
+                                            size: '200,200',
+                                            display: 'inlay-fix'
+                                        });
+                                    })();
+                                </script>
+
+                             </div>
+
+                         </div>
+                   </div>
+                <script type="text/javascript">
+                    setTimeout(function () {
+                        var naviga_offsetTop = 0;
+                        function naviga_stay_top() { var scrollTop = jQuery(document).scrollTop(); if (scrollTop > naviga_offsetTop) { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": "0px" }); } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); } }
+                        function onload_function() { naviga_offsetTop = jQuery("#nav_show_top_stop").position().top; jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top); jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top); } jQuery(document).ready(onload_function);
+
+                    }, 200);
+                </script>                    
+
+           </div>   
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+     
+
+
+       <script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>   
+    
+    <script src="http://static.blog.csdn.net/scripts/csdn_blog_detail.min.js" type="text/javascript"></script>
+        
+    <script type="text/javascript" src="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.js?20170719001"></script>
+
+    <script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=4984011"></script>
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+          
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" ></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            }, 500);
+
+        </script>
+
+</body>
+</html>   

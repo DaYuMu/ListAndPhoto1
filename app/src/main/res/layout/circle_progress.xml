@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentFrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_gravity="center">
+
+	<com.zhy.android.percent.support.PercentLinearLayout
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_gravity="center"
+		android:gravity="center_horizontal"
+		android:background="@drawable/circle_progress_bg"
+		app:layout_heightPercent="15%h"
+		android:orientation="vertical"
+		app:layout_widthPercent="40%w">
+
+		<ProgressBar
+			android:id="@+id/circleProgress"
+			style="@android:style/Widget.ProgressBar.Large"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:indeterminate="false"
+			android:indeterminateDrawable="@drawable/circle_progressbar_style"
+			android:interpolator="@android:anim/linear_interpolator"
+			app:layout_heightPercent="50%h"
+			app:layout_marginTopPercent="5%h"
+			app:layout_widthPercent="50%h"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/circleProgress"
+			android:layout_centerHorizontal="true"
+			android:text="加载中,请稍后……"
+			app:layout_marginTopPercent="18%h"
+			app:layout_textSizePercent="10%"
+			/>
+
+	</com.zhy.android.percent.support.PercentLinearLayout>
+
+
+</com.zhy.android.percent.support.PercentFrameLayout>
+

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentLinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_gravity="center_horizontal"
+	android:orientation="vertical">
+
+	<com.zhy.android.percent.support.PercentLinearLayout
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_gravity="center_horizontal"
+		app:layout_heightPercent="8%"
+		app:layout_widthPercent="60%"
+		>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:background="#2784d2"
+			android:text="相片选取"
+			android:gravity="center"
+			android:textColor="#ffffff"
+			app:layout_heightPercent="100%"
+			app:layout_textSizePercent="38%"
+			app:layout_widthPercent="100%"/>
+
+	</com.zhy.android.percent.support.PercentLinearLayout>
+
+
+
+
+
+
+	<com.zhy.android.percent.support.PercentLinearLayout
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_gravity="center_horizontal"
+		android:orientation="horizontal"
+		app:layout_heightPercent="6%"
+		app:layout_widthPercent="60%"
+		>
+
+		<Button
+			android:id="@+id/camera"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@drawable/btn_select_photos_bg"
+			android:text="拍 照"
+			app:layout_textSizePercent="38%"
+			/>
+
+
+	</com.zhy.android.percent.support.PercentLinearLayout>
+
+	<com.zhy.android.percent.support.PercentLinearLayout
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="#cfcfcf"
+		android:orientation="horizontal"
+		app:layout_heightPercent="0.1%"
+		app:layout_widthPercent="60%"
+
+		>
+
+	</com.zhy.android.percent.support.PercentLinearLayout>
+
+
+	<com.zhy.android.percent.support.PercentLinearLayout
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_gravity="center_horizontal"
+		android:orientation="horizontal"
+		app:layout_heightPercent="6%"
+		app:layout_widthPercent="60%"
+		>
+
+		<Button
+			android:id="@+id/picture"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:background="@drawable/btn_select_photos_bg"
+			android:layout_weight="1"
+			android:text="从图库选择"
+			app:layout_textSizePercent="38%"
+			/>
+
+	</com.zhy.android.percent.support.PercentLinearLayout>
+
+
+
+</com.zhy.android.percent.support.PercentLinearLayout>
+

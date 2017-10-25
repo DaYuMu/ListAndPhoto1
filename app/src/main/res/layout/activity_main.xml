@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/activity_main"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="com.nlwl.listandphoto.MainActivity"
+	android:orientation="vertical">
+	<RelativeLayout
+		android:id="@+id/rl_title_weibaoxiang"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:background="#2784d2">
+
+		<!--<ImageView-->
+			<!--android:id="@+id/photo_back"-->
+			<!--android:layout_width="30dp"-->
+			<!--android:layout_height="30dp"-->
+			<!--android:layout_centerVertical="true"-->
+			<!--android:layout_marginLeft="10dp"-->
+			<!--android:src="@drawable/back"/>-->
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_centerVertical="true"
+			android:gravity="center"
+			android:text=""
+			android:textColor="#fff"
+			android:textSize="20sp"
+			android:textStyle="bold"/>
+
+	</RelativeLayout>
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:gravity="center"
+		android:textSize="20dp"
+		android:textAllCaps="false"
+		android:textColor="#0BC763"
+		android:text="toList"
+		android:onClick="toList"/>
+
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:gravity="center"
+		android:textSize="20dp"
+		android:textAllCaps="false"
+		android:textColor="#0BC763"
+		android:text="toPhoto"
+		android:onClick="toPhoto"/>
+
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:gravity="center"
+		android:textSize="20dp"
+		android:textAllCaps="false"
+		android:textColor="#0BC763"
+		android:text="toWebView(电梯测试)"
+		android:onClick="toWebView"/>
+
+</LinearLayout>
