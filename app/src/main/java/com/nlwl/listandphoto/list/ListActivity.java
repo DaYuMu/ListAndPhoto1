@@ -43,8 +43,6 @@ public class ListActivity extends AppCompatActivity {
 	}
 
 
-
-
 	/**
 	 * 知识库中的搜索功能
 	 */
